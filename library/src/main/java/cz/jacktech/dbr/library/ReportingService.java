@@ -5,6 +5,7 @@ package cz.jacktech.dbr.library;
  */
 public interface ReportingService {
 
+    public void create(String serverUrl);
     public void report(String title, String text);
     public void auth(String username, String password);
 
