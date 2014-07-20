@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -32,23 +33,7 @@ public class IssueDialog extends AlertDialog{
     private OnClickListener defaultPositiveListener = new OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-
-            String username = ((EditText)findViewById(R.id.username)).getText().toString();
-            String password = ((EditText)findViewById(R.id.password)).getText().toString();
-            String issueName = ((EditText)findViewById(R.id.report_title)).getText().toString();
-            String issueText = ((EditText)findViewById(R.id.report_text)).getText().toString();
-            if(service.auth(username, password)){
-                if(service.report(issueName, issueText)){
-                    if(positiveListener != null)
-                        positiveListener.onClick(dialog, which);
-                    dialog.dismiss();
-                }else{
-                    Toast.makeText(getContext(), R.string.send_failed, Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                }
-            }else{
-                Toast.makeText(getContext(), R.string.invalid_credentials, Toast.LENGTH_LONG).show();
-            }
+            new ReportSender(dialog).execute();
         }
     };
 
@@ -70,6 +55,40 @@ public class IssueDialog extends AlertDialog{
 
     public void setNegativeListener(OnClickListener negativeListener) {
         this.negativeListener = negativeListener;
+    }
+
+    private class ReportSender extends AsyncTask<Void, Void, Boolean>{
+
+        private DialogInterface dialog;
+
+        public ReportSender(DialogInterface dialog) {
+            this.dialog = dialog;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            String username = ((EditText)findViewById(R.id.username)).getText().toString();
+            String password = ((EditText)findViewById(R.id.password)).getText().toString();
+            String issueName = ((EditText)findViewById(R.id.report_title)).getText().toString();
+            String issueText = ((EditText)findViewById(R.id.report_text)).getText().toString();
+            if(service.auth(username, password)){
+                if(service.report(issueName, issueText)){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean success) {
+            if(success){
+                if(positiveListener != null)
+                    positiveListener.onClick(dialog, 0);
+                Toast.makeText(getContext(), R.string.send_successfull, Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getContext(), R.string.send_failed, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     public static class Builder{
