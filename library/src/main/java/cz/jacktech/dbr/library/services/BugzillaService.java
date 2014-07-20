@@ -13,12 +13,12 @@ public class BugzillaService implements ReportingService {
     }
 
     @Override
-    public void report(String title, String text) {
-
+    public boolean report(String title, String text) {
+        return false;
     }
 
     @Override
-    public void auth(String username, String password) {
-
+    public boolean auth(String username, String password) {
+        return false;
     }
 }

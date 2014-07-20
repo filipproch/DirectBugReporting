@@ -17,11 +17,11 @@ public class RedmineIssue {
     @SerializedName("project_id")
     public int projectId;
 
-    @SerializedName("tracker_id")
+    /*@SerializedName("tracker_id")
     public int trackerId;
 
     @SerializedName("status_id")
-    public int statusId;
+    public int statusId;*/
 
     @SerializedName("priority_id")
     public int priorityId;
@@ -30,7 +30,7 @@ public class RedmineIssue {
 
     public String description;
 
-    @SerializedName("category_id")
+    /*@SerializedName("category_id")
     public int categoryId;
 
     @SerializedName("fixed_version_id")
@@ -42,6 +42,6 @@ public class RedmineIssue {
     @SerializedName("parent_issue_id")
     public int parentIssueId;
 
-    //todo: add custom fields support
+    //todo: add custom fields support*/
 
 }

@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 
 import cz.jacktech.dbr.library.ReportingService;
 import cz.jacktech.dbr.library.communication.IRedmine;
+import cz.jacktech.dbr.library.communication.RedmineRequestInterceptor;
+import cz.jacktech.dbr.library.communication.data.User;
 import cz.jacktech.dbr.library.communication.data.redmine.RedmineRequestBody;
 import cz.jacktech.dbr.library.communication.data.redmine.RedmineResponse;
 import retrofit.Callback;
@@ -16,11 +18,12 @@ import retrofit.client.Response;
 /**
  * Created by toor on 20.7.14.
  */
-public class RedmineService implements ReportingService, Callback<RedmineResponse> {
+public class RedmineService implements ReportingService {
 
     private static final String TAG = RedmineService.class.getSimpleName();
     private IRedmine redmine;
     private int projectId;
+    private RedmineRequestInterceptor requestInterceptor;
 
     public RedmineService(int projectId){
         this.projectId = projectId;
@@ -29,14 +32,15 @@ public class RedmineService implements ReportingService, Callback<RedmineRespons
     @Override
     public void create(String serverUrl) {
         RestAdapter.Builder builder = new RestAdapter.Builder();
+        builder.setRequestInterceptor(requestInterceptor = new RedmineRequestInterceptor());
         builder.setEndpoint(serverUrl);
         RestAdapter adapter = builder.build();
         redmine = adapter.create(IRedmine.class);
     }
 
     @Override
-    public void report(String title, String text) {
-        report(title, text, 4); //4 is default Normal priority
+    public boolean report(String title, String text) {
+        return report(title, text, 4); //4 is default Normal priority
     }
 
     /**
@@ -45,27 +49,26 @@ public class RedmineService implements ReportingService, Callback<RedmineRespons
      * @param text
      * @param priorityId
      */
-    private void report(String title, String text, int priorityId){
+    private boolean report(String title, String text, int priorityId){
         //todo: find how to get priority ids, otherwise they must be defined in configuration...
-        Gson gson = new Gson();
-        String body = gson.toJson(new RedmineRequestBody(projectId, title, text, priorityId));
-        redmine.createIssue(body, this);
+        try {
+            RedmineResponse.IssueCreation issueCreation = redmine.createIssue(new RedmineRequestBody(projectId, title, text, priorityId));
+        }catch (RetrofitError e){
+            Log.e(TAG, "retrofit error; network:"+e.isNetworkError()+"; "+e.getLocalizedMessage());
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public void auth(String username, String password) {
-
+    public boolean auth(String username, String password) {
+        requestInterceptor.setUser(new User(username, password));
+        try {
+            RedmineResponse.UserAuthentication authResponse = redmine.authUser();
+        }catch (RetrofitError e){
+            return false;
+        }
+        return true;
     }
 
-    @Override
-    public void success(RedmineResponse redmineResponse, Response response) {
-        //todo: report succesfull send to the user, with link to the created issue
-        Log.v(TAG, "issue creation request send successfully");
-    }
-
-    @Override
-    public void failure(RetrofitError error) {
-        //todo: report send failure to the user
-        Log.w(TAG, "issue creation request send failed, networkError:"+error.isNetworkError());
-    }
 }

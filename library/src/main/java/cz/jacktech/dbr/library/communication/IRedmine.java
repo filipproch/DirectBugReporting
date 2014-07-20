@@ -1,5 +1,6 @@
 package cz.jacktech.dbr.library.communication;
 
+import cz.jacktech.dbr.library.communication.data.redmine.RedmineRequestBody;
 import cz.jacktech.dbr.library.communication.data.redmine.RedmineResponse;
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -12,6 +13,9 @@ import retrofit.http.POST;
 public interface IRedmine {
 
     @POST("/issues.json")
-    public void createIssue(@Body String body, Callback<RedmineResponse> callback);
+    public RedmineResponse.IssueCreation createIssue(@Body RedmineRequestBody body);
+
+    @GET("/users/current.json")
+    public RedmineResponse.UserAuthentication authUser();
 
 }
