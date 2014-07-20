@@ -8,7 +8,7 @@ import retrofit.RequestInterceptor;
 /**
  * Created by toor on 20.7.14.
  */
-public class RedmineRequestInterceptor implements RequestInterceptor {
+public class CustomRequestInterceptor implements RequestInterceptor {
 
     private User user;
 

@@ -18,7 +18,6 @@ import cz.jacktech.dbr.library.ReportingService;
  */
 public class IssueDialog extends AlertDialog{
 
-    private View innerView;
     private ReportingService service;
     private OnClickListener positiveListener;
     private OnClickListener negativeListener;
@@ -133,7 +132,7 @@ public class IssueDialog extends AlertDialog{
             if(dialog.getButton(DialogInterface.BUTTON_NEGATIVE) == null){
                 dialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.cancel), dialog.defaultNegativeListener);
             }
-            dialog.setView(dialog.innerView = ((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.default_reporting_dialog,null));
+            dialog.setView(((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.default_reporting_dialog,null));
             return dialog;
         }
 

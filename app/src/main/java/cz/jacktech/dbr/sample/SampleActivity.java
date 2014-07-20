@@ -20,7 +20,7 @@ public class SampleActivity extends Activity {
 
         redmineService = new RedmineService(5);//setting project id
         redmineService.create("http://bugs.jacktech.cz");//settings server url
-        Button b = (Button) findViewById(R.id.report_button);
+        Button b = (Button) findViewById(R.id.redmine_report_button);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

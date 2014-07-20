@@ -2,18 +2,14 @@ package cz.jacktech.dbr.library.services;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-
 import cz.jacktech.dbr.library.ReportingService;
+import cz.jacktech.dbr.library.communication.CustomRequestInterceptor;
 import cz.jacktech.dbr.library.communication.IRedmine;
-import cz.jacktech.dbr.library.communication.RedmineRequestInterceptor;
 import cz.jacktech.dbr.library.communication.data.User;
 import cz.jacktech.dbr.library.communication.data.redmine.RedmineRequestBody;
 import cz.jacktech.dbr.library.communication.data.redmine.RedmineResponse;
-import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by toor on 20.7.14.
@@ -23,7 +19,7 @@ public class RedmineService implements ReportingService {
     private static final String TAG = RedmineService.class.getSimpleName();
     private IRedmine redmine;
     private int projectId;
-    private RedmineRequestInterceptor requestInterceptor;
+    private CustomRequestInterceptor requestInterceptor;
 
     public RedmineService(int projectId){
         this.projectId = projectId;
@@ -32,7 +28,7 @@ public class RedmineService implements ReportingService {
     @Override
     public void create(String serverUrl) {
         RestAdapter.Builder builder = new RestAdapter.Builder();
-        builder.setRequestInterceptor(requestInterceptor = new RedmineRequestInterceptor());
+        builder.setRequestInterceptor(requestInterceptor = new CustomRequestInterceptor());
         builder.setEndpoint(serverUrl);
         RestAdapter adapter = builder.build();
         redmine = adapter.create(IRedmine.class);
@@ -40,7 +36,7 @@ public class RedmineService implements ReportingService {
 
     @Override
     public boolean report(String title, String text) {
-        return report(title, text, 4); //4 is default Normal priority
+        return report(title, text, 3); //4 is default Normal priority
     }
 
     /**
