@@ -32,7 +32,7 @@ public class GithubService implements ReportingService {
     public void create(String serverUrl) {
         RestAdapter.Builder builder = new RestAdapter.Builder();
         builder.setRequestInterceptor(requestInterceptor = new CustomRequestInterceptor());
-        builder.setEndpoint(serverUrl);
+        builder.setEndpoint("https://github.com");
         RestAdapter adapter = builder.build();
         github = adapter.create(IGithub.class);
     }
