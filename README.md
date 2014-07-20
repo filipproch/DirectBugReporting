@@ -30,3 +30,4 @@ License
     limitations under the License.
 
  [1]: http://jacktech24.github.io/directbugreporting/
+ [2]: https://github.com/jacktech24/DirectBugReporting/blob/master/library/build/outputs/aar/library.aar?raw=true
