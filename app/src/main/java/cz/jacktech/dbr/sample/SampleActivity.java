@@ -4,35 +4,33 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-import cz.jacktech.dbr.R;
+import cz.jacktech.dbr.library.ReportingService;
+import cz.jacktech.dbr.library.android.IssueDialog;
+import cz.jacktech.dbr.library.services.RedmineService;
 
 
 public class SampleActivity extends Activity {
+
+    private ReportingService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
-    }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.sample, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        service = new RedmineService(5);//setting project id
+        service.create("http://bugs.jacktech.cz");//settings server url
+        Button b = (Button) findViewById(R.id.report_button);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IssueDialog.Builder builder = new IssueDialog.Builder(SampleActivity.this);
+                builder.setService(service)
+                .show();
+            }
+        });
     }
 }
