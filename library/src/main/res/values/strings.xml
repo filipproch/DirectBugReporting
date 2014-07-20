@@ -9,4 +9,6 @@
     <string name="report">Report</string>
     <string name="title">Title (subject)</string>
     <string name="text">Description</string>
+    <string name="send_failed">Report send failed, internal error</string>
+    <string name="invalid_credentials">Invalid login credentials, try again...</string>
 </resources>

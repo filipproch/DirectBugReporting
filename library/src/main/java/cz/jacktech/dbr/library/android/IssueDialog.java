@@ -5,6 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import cz.jacktech.dbr.library.R;
 import cz.jacktech.dbr.library.ReportingService;
@@ -14,6 +17,7 @@ import cz.jacktech.dbr.library.ReportingService;
  */
 public class IssueDialog extends AlertDialog{
 
+    private View innerView;
     private ReportingService service;
     private OnClickListener positiveListener;
     private OnClickListener negativeListener;
@@ -28,9 +32,23 @@ public class IssueDialog extends AlertDialog{
     private OnClickListener defaultPositiveListener = new OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            if(positiveListener != null)
-                positiveListener.onClick(dialog, which);
-            dialog.dismiss();
+
+            String username = ((EditText)findViewById(R.id.username)).getText().toString();
+            String password = ((EditText)findViewById(R.id.password)).getText().toString();
+            String issueName = ((EditText)findViewById(R.id.report_title)).getText().toString();
+            String issueText = ((EditText)findViewById(R.id.report_text)).getText().toString();
+            if(service.auth(username, password)){
+                if(service.report(issueName, issueText)){
+                    if(positiveListener != null)
+                        positiveListener.onClick(dialog, which);
+                    dialog.dismiss();
+                }else{
+                    Toast.makeText(getContext(), R.string.send_failed, Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                }
+            }else{
+                Toast.makeText(getContext(), R.string.invalid_credentials, Toast.LENGTH_LONG).show();
+            }
         }
     };
 
@@ -96,7 +114,7 @@ public class IssueDialog extends AlertDialog{
             if(dialog.getButton(DialogInterface.BUTTON_NEGATIVE) == null){
                 dialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.cancel), dialog.defaultNegativeListener);
             }
-            dialog.setView(((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.default_reporting_dialog,null));
+            dialog.setView(dialog.innerView = ((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.default_reporting_dialog,null));
             return dialog;
         }
 
