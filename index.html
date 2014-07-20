@@ -33,7 +33,29 @@
 
 <p>An Android library to help you get error reports from your users</p>
 
-<p>For more information please see <a href="http://jacktech24.github.io/directbugreporting/">the website</a>.</p>
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<ol>
+<li>Download library .AAR package, then put it in your libs folder</li>
+</ol><p>To show report dialog, in which user can fill issue details use this code:</p>
+
+<p><strong>for Github</strong></p>
+
+<p><code>GithubService service = new GithubService("RepositoryName");
+service.create(null);
+IssueDialog dialog = new IssueDialog.Builder(context)
+.setService(service)
+.show();</code></p>
+
+<p><strong>for Redmine</strong></p>
+
+<p><code>int projectId = 1; //your redmine project ID
+RedmineService service = new RedmineService(projectId);
+service.create("http://yourredmineurl/");
+IssueDialog dialog = new IssueDialog.Builder(context)
+.setService(service)
+.show();</code></p>
 
 <h2>
 <a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
