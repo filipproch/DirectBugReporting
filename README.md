@@ -9,7 +9,7 @@ For more information please see [the website][1].
 Download
 --------
 
-Download [the latest JAR][2]
+Download [the latest AAR][2]
 
 
 License
