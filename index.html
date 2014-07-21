@@ -42,24 +42,24 @@
 
 <p><strong>for Github</strong></p>
 
-<p>
+<pre>
 <code>
-GithubService service = new GithubService("RepositoryName");
-service.create(null);
+GithubService service = new GithubService("RepositoryOwner","RepositoryName");
+service.create(null);//always null, url is defined internally
 IssueDialog dialog = new IssueDialog.Builder(context)
 .setService(service)
 .show();
 </code>
-</p>
+</pre>
 
 <p><strong>for Redmine</strong></p>
 
-<p><code>int projectId = 1; //your redmine project ID
+<pre><code>int projectId = 1; //your redmine project ID
 RedmineService service = new RedmineService(projectId);
 service.create("http://yourredmineurl/");
 IssueDialog dialog = new IssueDialog.Builder(context)
 .setService(service)
-.show();</code></p>
+.show();</code></pre>
 
 <h2>
 <a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
@@ -90,6 +90,6 @@ limitations under the License.
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+
   </body>
 </html>
