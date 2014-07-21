@@ -15,6 +15,7 @@
   <body>
     <div class="wrapper">
       <header>
+        <h1>Direct Bug Reporting</h1>
         <p>An Android library to help you get error reports from your users</p>
 
         <p class="view"><a href="https://github.com/jacktech24/DirectBugReporting">View the Project on GitHub <small>jacktech24/DirectBugReporting</small></a></p>
@@ -27,16 +28,19 @@
         </ul>
       </header>
       <section>
-        <h1>
-<a name="directbugreporting" class="anchor" href="#directbugreporting"><span class="octicon octicon-link"></span></a>DirectBugReporting</h1>
 
 <p>An Android library to help you get error reports from your users</p>
+<b>Support for: </b>
+<ul>
+  <li>Github issues</li>
+  <li><a href="http://www.redmine.org/">Redmine</a></li>
+</ul>
 
 <h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
+<h3>Report dialog</h3>
 <ol>
-<li>Download library .AAR package, then put it in your libs folder</li>
 </ol><p>To show report dialog, in which user can fill issue details use this code:</p>
 
 <p><strong>for Github</strong></p>
@@ -59,6 +63,8 @@ service.create("http://yourredmineurl/");
 IssueDialog dialog = new IssueDialog.Builder(context)
 .setService(service)
 .show();</code></pre>
+
+<h3>Manual report</h3>
 
 <h2>
 <a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
