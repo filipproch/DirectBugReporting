@@ -66,7 +66,6 @@ IssueDialog dialog = new IssueDialog.Builder(context)
 
 <h3>Manual report</h3>
 
-<p><strong>for Github</strong></p>
 <p>
   Both methods <code>service.auth(...)</code> and <code>service.report(...)</code> return <code>Bundle</code> object. It contains information about the request like if it was successful.
    These options are :
@@ -76,6 +75,9 @@ IssueDialog dialog = new IssueDialog.Builder(context)
      <li><code>ReportingService.RESPONSE_ISSUE_URL</code> - String, included if report method successful, contains url to created issue</li>
    </ul>
 </p>
+
+<p><strong>for Github</strong></p>
+
 <pre>
 <code>
 GithubService service = new GithubService("RepositoryOwner","RepositoryName");
