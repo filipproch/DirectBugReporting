@@ -1,24 +1,26 @@
 package cz.jacktech.dbr.library.services;
 
+import android.os.Bundle;
+
 import cz.jacktech.dbr.library.ReportingService;
 
 /**
  * Created by toor on 20.7.14.
  */
-public class BugzillaService implements ReportingService {
+public class BugzillaService extends ReportingService {
 
     @Override
     public void create(String serverUrl) {
-
+        super.create(serverUrl);
     }
 
     @Override
-    public boolean report(String title, String text) {
-        return false;
+    public Bundle report(String title, String text) {
+        return null;
     }
 
     @Override
-    public boolean auth(String username, String password) {
-        return false;
+    public Bundle auth(String username, String password) {
+        return null;
     }
 }
