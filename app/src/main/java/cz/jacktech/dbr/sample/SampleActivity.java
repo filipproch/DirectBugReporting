@@ -32,7 +32,7 @@ public class SampleActivity extends Activity {
             }
         });
 
-        githubService = new GithubService("DirectBugReporting");//setting github repository
+        githubService = new GithubService("jacktech24", "DirectBugReporting");//setting github repository
         githubService.create(null);//for github always pass null
         b = (Button) findViewById(R.id.github_report_button);
         b.setOnClickListener(new View.OnClickListener() {

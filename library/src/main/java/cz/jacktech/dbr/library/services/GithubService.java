@@ -20,11 +20,13 @@ import retrofit.RetrofitError;
 public class GithubService implements ReportingService {
 
     private static final String TAG = GithubService.class.getSimpleName();
+    private String projectOwner;
     private String projectRepo;
     private CustomRequestInterceptor requestInterceptor;
     private IGithub github;
 
-    public GithubService(String projectRepo){
+    public GithubService(String projectOwner, String projectRepo){
+        this.projectOwner = projectOwner;
         this.projectRepo = projectRepo;
     }
 
@@ -40,7 +42,7 @@ public class GithubService implements ReportingService {
     @Override
     public boolean report(String title, String text) {
         try {
-            GithubResponse.IssueCreation issueCreation = github.createIssue(projectRepo,new GithubIssue(title, text));
+            GithubResponse.IssueCreation issueCreation = github.createIssue(projectOwner,projectRepo,new GithubIssue(title, text));
         }catch (RetrofitError e){
             Log.e(TAG, "retrofit error; network:" + e.isNetworkError() + "; " + e.getLocalizedMessage());
             return false;
