@@ -9,7 +9,20 @@ For more information please see [the website][1].
 Download
 --------
 
-Download [the latest AAR][2]
+###Gradle
+
+    compile 'cz.jacktech.dbr:library:0.1.0@aar'
+###Maven
+
+    <dependency>
+      <groupId>cz.jacktech.dbr</groupId>
+      <artifactId>library</artifactId>
+      <version>0.1.0</version>
+      <type>aar</type>
+    </dependency>
+
+###Latest AAR package
+Download [0.1.0][2]
 
 
 License
@@ -29,5 +42,5 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
- [1]: http://jacktech24.github.io/directbugreporting/
- [2]: https://github.com/jacktech24/DirectBugReporting/blob/master/library/build/outputs/aar/library.aar?raw=true
+ [1]: http://jacktech24.github.io/DirectBugReporting/
+ [2]: https://oss.sonatype.org/content/repositories/releases/cz/jacktech/dbr/library/0.1.0/library-0.1.0.aar
