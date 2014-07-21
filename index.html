@@ -66,6 +66,38 @@ IssueDialog dialog = new IssueDialog.Builder(context)
 
 <h3>Manual report</h3>
 
+<p><strong>for Github</strong></p>
+<p>
+  Both methods <code>service.auth(...)</code> and <code>service.report(...)</code> return <code>Bundle</code> object. It contains information about the request like if it was successful.
+   These options are :
+   <ul>
+     <li><code>ReportingService.ACTION_SUCCESS</code> - boolean, always in Bundle</li>
+     <li><code>ReportingService.RESPONSE_MESSAGE</code> - String, included if there is message in response from server</li>
+     <li><code>ReportingService.RESPONSE_ISSUE_URL</code> - String, included if report method successful, contains url to created issue</li>
+   </ul>
+</p>
+<pre>
+<code>
+GithubService service = new GithubService("RepositoryOwner","RepositoryName");
+service.create(null);//always null, url is defined internally
+
+//first you must authenticate user using his Github username and password
+service.auth("username", "password");
+//then you can send report
+service.report("report title", "report message");
+</code>
+</pre>
+
+<p><strong>for Redmine</strong></p>
+
+<pre><code>int projectId = 1; //your redmine project ID
+RedmineService service = new RedmineService(projectId);
+service.create("http://yourredmineurl/");
+IssueDialog dialog = new IssueDialog.Builder(context)
+.setService(service)
+.show();</code></pre>
+
+
 <h2>
 <a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
 
