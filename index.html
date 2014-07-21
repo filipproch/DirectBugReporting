@@ -98,12 +98,23 @@ if(b.getBoolean(ReportingService.ACTION_SUCCESS)){}
 
 <p><strong>for Redmine</strong></p>
 
-<pre><code>int projectId = 1; //your redmine project ID
+<pre><code>
+int projectId = 1; //your redmine project ID
 RedmineService service = new RedmineService(projectId);
+//specify your redmine installation URL
 service.create("http://yourredmineurl/");
-IssueDialog dialog = new IssueDialog.Builder(context)
-.setService(service)
-.show();</code></pre>
+
+//first you must authenticate user using his Github username and password
+Bundle b = service.auth("username", "password");
+if(b.getBoolean(ReportingService.ACTION_SUCCESS)){}
+  //authentication successful, you can send report
+  b = service.report("report title", "report message");
+  if(b.getBoolean(ReportingService.ACTION_SUCCESS)){
+    //report sent successfully
+    String url = b.getString(ReportingService.RESPONSE_ISSUE_URL);
+  }
+}
+</code></pre>
 
 
 <h2>
