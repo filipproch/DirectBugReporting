@@ -84,9 +84,15 @@ GithubService service = new GithubService("RepositoryOwner","RepositoryName");
 service.create(null);//always null, url is defined internally
 
 //first you must authenticate user using his Github username and password
-service.auth("username", "password");
-//then you can send report
-service.report("report title", "report message");
+Bundle b = service.auth("username", "password");
+if(b.getBoolean(ReportingService.ACTION_SUCCESS)){}
+  //authentication successful, you can send report
+  b = service.report("report title", "report message");
+  if(b.getBoolean(ReportingService.ACTION_SUCCESS)){
+    //report sent successfully
+    String url = b.getString(ReportingService.RESPONSE_ISSUE_URL);
+  }
+}
 </code>
 </pre>
 
